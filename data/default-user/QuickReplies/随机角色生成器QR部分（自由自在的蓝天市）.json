@@ -1,0 +1,28 @@
+{
+    "version": 2,
+    "name": "随机角色生成器QR部分（自由自在的蓝天市）",
+    "disableSend": false,
+    "placeBeforeInput": false,
+    "injectInput": false,
+    "color": "rgba(0, 0, 0, 0)",
+    "onlyBorderColor": false,
+    "qrList": [
+        {
+            "id": 1,
+            "showLabel": false,
+            "label": "生成角色",
+            "title": "",
+            "message": "/getentryfield file=自由自在的蓝天市 field=content 0 |\n/setvar key=CharList |\n/input 请输入需要生成的角色及特征,留空则为按需生成 |\n/setvar key=SpecialOrder |\n/preset 随机角色生成器预设部分（自由自在的蓝天市）|\n/delay 2000 |\n/model claude-3-5-sonnet-20241022 |\n//修改为自己在用的模型名称 |\n/gen lock=on |\n/setvar key=DesignContent |\n/fuzzy mode=first list=[\"无需生成\",\"开始生成\"] threshold=0.4 {{getvar::DesignContent}} |\n/if left={{pipe}} right=\"开始生成\" rule=eq else={:/popup 未找到需要生成的人物 |:} \n  {:\n  /regex name=捕获角色信息1 {{getvar::DesignContent}} |\n  /regex name=捕获角色信息2 {{pipe}} |\n  /setvar key=CharInfo {{pipe}} |\n  /regex name=捕获中文名1 {{getvar::DesignContent}} |\n  /regex name=捕获中文名2 {{pipe}} |\n  /setvar key=EntryName {{pipe}} |\n  /setvar key=keyword {{getvar::EntryName}} |\n  /regex name=捕获英文名1 {{getvar::DesignContent}} |\n  /regex name=捕获英文名2 {{pipe}} |\n  /addvar key=keyword , {{pipe}}  |\n  /regex name=捕获身份1 {{getvar::DesignContent}} |\n  /regex name=捕获身份2 , {{pipe}} |\n  /addvar index=2 key=keyword {{pipe}} |\n  /createentry file=自由自在的蓝天市 key={{getvar::keyword}} {{getvar::CharInfo}} |\n  /findentry file=自由自在的蓝天市 field=content {{getvar::CharInfo}} |\n  /setvar key=uid {{pipe}} |\n  /setentryfield file=自由自在的蓝天市 uid={{getvar::uid}} field=comment {{getvar::EntryName}} |\n  /setentryfield file=自由自在的蓝天市 uid={{getvar::uid}} field=excludeRecursion 1 |\n  /setentryfield file=自由自在的蓝天市 uid={{getvar::uid}} field=preventRecursion 1 |\n  /setentryfield file=自由自在的蓝天市 uid={{getvar::uid}} field=position 0 |\n  /setentryfield file=自由自在的蓝天市 uid={{getvar::uid}} field=role 0 |\n  /setentryfield file=自由自在的蓝天市 uid={{getvar::uid}} field=scanDepth 2 |\n  /setentryfield file=自由自在的蓝天市 uid={{getvar::uid}} field=caseSensitive 0 |\n  /setentryfield file=自由自在的蓝天市 uid={{getvar::uid}} field=matchWholeWords 0 |\n  /addvar key=CharList \"{{getvar::keyword}}\", |\n  /setentryfield file=自由自在的蓝天市 uid=0 field=content |\n  /popup 已生成角色：{{getvar::EntryName}} |\n  :}|\n/flushvar CharList |\n/flushvar SpecialOrder |\n/preset 处女座_1.83 |\n/delay 2000 |\n/model claude-3-5-sonnet-20241022 |\n//修改为自己在用的预设和模型名称 |",
+            "contextList": [],
+            "preventAutoExecute": false,
+            "isHidden": false,
+            "executeOnStartup": false,
+            "executeOnUser": true,
+            "executeOnAi": true,
+            "executeOnChatChange": true,
+            "executeOnGroupMemberDraft": false,
+            "automationId": ""
+        }
+    ],
+    "idIndex": 4
+}
